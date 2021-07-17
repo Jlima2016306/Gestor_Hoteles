@@ -1,0 +1,861 @@
+
+<div id= "Contenedor">
+
+
+
+
+
+<div>
+<img src="/assets/koala.jpg"  class="user-image">
+</div>
+
+
+
+<br><h1><strong>HOTELES</strong> </h1>
+
+<div  >
+  <nav class="navbar navbar-light bg-light "  id="buscar">
+
+    <div class=" ">
+      <div class="container">
+        <form class="form-inline" role="form">
+      <div class="btn-group ">
+
+
+        <input class="form-control mr-sm-2 " size="200" type="text" placeholder="Search" aria-label="Search"  id="Nombre" name="Nombre" #Nombre="ngModel" [(ngModel)]="NombredelHotel">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit"
+        data-bs-toggle="modal"  (click)="obtenerHotelesNombre(NombredelHotel)"
+         >Search</button>
+
+
+      </div>
+
+      <div class="form-group">
+
+
+
+      </div>
+
+    </form>
+
+  </div>
+  </div>
+  </nav>
+
+
+
+<button type="button" id="botonAgregar" style="float: center;" class="btn btn-outline-warning"
+data-bs-toggle="modal" data-bs-target="#modalAgregarHabitacion" *ngIf="Admin" >Agregar Hotel</button>
+
+<button type="button" id="botonAgregar" style="float: center;" class="btn btn-outline-success"
+data-bs-toggle="modal" routerLink="/graficas"  data-bs-target="#" *ngIf="Admin" >Ver Graficos</button>
+
+
+<button type="button" id="botonAgregar" class="btn btn-outline-primary"
+data-bs-toggle="modal" data-bs-target="#" (click)="obtenerHoteles()" >Recargar Lista</button>
+
+
+<button type="button"  id="botonMyHotel" class="btn btn-outline-dark"
+data-bs-toggle="modal" data-bs-target="#modalVermiHotel" *ngIf="Duenno" (click)="BuscarHotelesNombre()" >Ver mi Hotel</button>
+
+<button type="button" id="botonMyHotel" class="btn btn-outline-dark"
+data-bs-toggle="modal" data-bs-target="#modalVerHospedados" *ngIf="Myhotel" (click)="verHospedados()">Ver Usuarios hospedados</button>
+
+<button type="button" id="botonMyHotel" class="btn btn-outline-dark"
+data-bs-toggle="modal" data-bs-target="#modalVerAgregarEvento" *ngIf="Myhotel">Agregar Evento</button>
+
+<button type="button" id="botonMyHotel" class="btn btn-outline-dark"
+data-bs-toggle="modal" data-bs-target="#modalVerAgregarServicios" *ngIf="Myhotel">Agregar Servicio</button>
+
+<button type="button" id="botonMyHotel" class="btn btn-outline-dark"
+data-bs-toggle="modal" data-bs-target="#modalVerReservacion" *ngIf="Duenno" (click)="obtenerReservacion() ">Reservaciones de mi Hotel</button>
+
+<button type="button" id="botonMyHotel" class="btn btn-outline-dark"
+data-bs-toggle="modal" data-bs-target="#modalVerReservacion" *ngIf="!Duenno && !Admin && !Myhotel &&  NoInicioSesion"  (click)="obtenerReservacion()">Mi/s Reservacion/es</button>
+
+
+
+<!-- -->
+<table class="table " mat-table   *ngIf="!Myhotel" >
+  <thead>
+    <tr>
+    <th></th>
+      <th mat-header-cell scope="col">Hotel</th>
+      <th mat-header-cell scope="col">Direccion</th>
+      <th mat-header-cell scope="col">Habitaciones</th>
+      <th  mat-header-cell scope="col">Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let usua of Hotel">
+      <td><img src="/assets/Hotel.jpg"  class="hotel-image"></td>
+      <td mat-cell>{{ usua.Nombre }}</td>
+      <td mat-cell>{{ usua.Direccion }}</td>
+      <td mat-cell>{{ usua.Habitaciones }}</td>
+
+      <td>
+
+        <div class="btn-group" role="group" aria-label="Basic example">
+          <button type="button" class="btn btn-outline-dark" *ngIf="!NoInicioSesion" (click)="obtenerHotelesNombres(usua.Nombre)"
+          data-bs-toggle="modal" data-bs-target="">Habitaciones</button>
+        </div>
+
+        <div class="btn-group" role="group" aria-label="Basic example">
+
+          <button type="button" class="btn btn-outline-success" (click)="verEventos(usua.Nombre)"
+          data-bs-toggle="modal" data-bs-target="#modalVerEventos">ver Eventos</button>
+        </div>
+
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+<table class="table"  *ngIf="Myhotel" >
+  <thead>
+    <tr>
+      <th scope="col">Mi Hotel</th>
+      <th scope="col">Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let usua of MiHotelModel">
+      <td>{{ usua.Nombre }}</td>
+      <td>
+        <div class="btn-group" role="group" aria-label="Basic example">
+          <button type="button" class="btn btn-outline-warning" (click)="BuscarHotelesNombre(usua.Nombre)"
+          data-bs-toggle="modal" data-bs-target="#modalEditarUsuario">Editar Hotel</button>
+          <button type="button" class="btn btn-outline-danger" (click)="BuscarHotelesNombre(usua.Nombre)"
+          data-bs-toggle="modal" data-bs-target="#modalEliminarUsuario">Eliminar Hotel</button><br>
+        </div>
+
+        <div class="btn-group" role="group" aria-label="Basic example">
+          <button type="button" class="btn btn-outline-primary" (click)="verServicio(usua._id)"
+          data-bs-toggle="modal" data-bs-target="#modalVerServicios">ver Servicios</button>
+          <button type="button" class="btn btn-outline-success" (click)="verEventos(usua.Nombre)"
+          data-bs-toggle="modal" data-bs-target="#modalVerEventos">ver Eventos</button>
+        </div>
+
+
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+
+
+
+<!-- Agregar Hoteles, sí soy ADMIN-->
+
+<div class="modal fade" id="modalAgregarHabitacion" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title" id="exampleModalLabel">Agregar Hotel</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+
+
+        <form>
+
+          <div class="mb-3">
+            <label for="inputUsuario" class="form-label">Nombre del Hotel</label>
+            <input type="text" class="form-control" id="inputUsuario" name="Nombre" #Nombre="ngModel" [(ngModel)]="HotelModel.Nombre">
+          </div>
+
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Direccion</label>
+            <input type="text" class="form-control" id="exampleInputPassword1" name="PrecioNoche" #PrecioNoche="ngModel" [(ngModel)]="HotelModel.Direccion">
+          </div>
+
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Nombre del Dueño</label>
+            <input type="text" class="form-control" id="exampleInputPassword1" name="Descripcion" #Descripcion="ngModel" [(ngModel)]="HotelModel.DuennoUsuario">
+          </div>
+
+
+
+        </form>
+
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-outline-success" data-bs-dismiss="modal" (click)="agregarHotel()">Agregar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Huespedes-->
+
+<div class="modal fade" id="modalVerHospedados" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title" id="exampleModalLabel"><strong>USUARIOS HOSPEDADOS</strong></h1>
+
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <nav class="navbar navbar-light bg-light" id="buscar">
+
+          <div class="row g-12">
+            <div class="container">
+              <form class="form-inline" role="form">
+            <div class="btn-group mx-2 ">
+
+
+              <input class="form-control col-md-24" type="text" placeholder="Search" aria-label="Search"  id="Nombre" name="Nombre" #Nombre="ngModel" [(ngModel)]="fugitivo">
+
+
+
+            <button class="btn btn-outline-success " type="submit"
+            data-bs-toggle="modal"  (click)="buscarHospedados(fugitivo)"
+             >Search</button>
+
+            </div>
+
+          </form>
+
+        </div>
+        </div>
+        </nav>
+
+
+        <table class="table" *ngIf="!Buscado" >
+          <thead>
+            <tr>
+              <th scope="col">Usuario</th>
+              <th scope="col">Habitacion</th>
+              <th scope="col">Entrada</th>
+              <th scope="col">Salida</th>
+
+
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let usua of UsuariosH">
+              <td>{{ usua.Usuario.Usuario }}</td>
+              <td>{{ usua.Habitacion.Nombre }}</td>
+              <td>{{ usua.Entrada }}</td>
+              <td>{{ usua.Salida }}</td>
+
+            </tr>
+          </tbody>
+        </table>
+
+        <table class="table" *ngIf="Buscado" >
+          <thead>
+            <tr>
+              <th scope="col">Usuario</th>
+              <th scope="col">Habitacion</th>
+              <th scope="col">Entrada</th>
+              <th scope="col">Salida</th>
+
+
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let usua of UsuarioHB">
+              <td>{{ usua.Usuario.Usuario }}</td>
+              <td>{{ usua.Habitacion.Nombre }}</td>
+              <td>{{ usua.Entrada }}</td>
+              <td>{{ usua.Salida }}</td>
+
+            </tr>
+          </tbody>
+        </table>
+
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Eventos-->
+
+<div class="modal fade" id="modalVerEventos" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title" id="TituloModal"><strong>EVENTOS</strong></h1>
+
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+
+<!--
+        <table class="table"  >
+          <thead>
+            <tr>
+              <th scope="col">Nombre</th>
+              <th scope="col">Tipo de evneto</th>
+              <th scope="col">Descripcion</th>
+              <th scope="col">FechaInit</th>
+
+
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let usua of eventos">
+              <td>{{ usua.Nombre }}</td>
+              <td>{{ usua.Tipo }}</td>
+              <td>{{ usua.Descripcion }}</td>
+              <td>{{ usua.FechaInit }}</td>
+
+            </tr>
+          </tbody>
+        </table>
+      -->
+
+        <div class="card text-center" id="CartaDeEventos" style="width: 18rem;" *ngFor="let usua of eventos">
+        <!--  <img src="..." class="card-img-top" alt="...">-->
+          <div class="card-body">
+            <h1 class="card-title"><b>{{ usua.Nombre }}</b></h1>
+            <p class="card-text">{{ usua.Descripcion }}</p>
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item"> <b>Tipo: </b>{{ usua.Tipo }}</li>
+            <li class="list-group-item"> <b>Inicio: </b>{{ usua.FechaInit }}</li>
+            <li class="list-group-item"> <b>Final: </b>{{ usua.FechaEnd }}</li>
+
+          </ul>
+          <div class="card-body"  *ngIf="Myhotel">
+            <div class="btn" role="group" aria-label="Basic example">
+              <button type="button" class="btn btn-outline-warning" (click)="obtenerEventoID(usua._id)"
+              data-bs-toggle="modal" data-bs-target="#modalEditarEvento" mx-2>Editar Evento</button>
+              <button type="button" class="btn btn-outline-danger " (click)="obtenerEventoID(usua._id)"
+              data-bs-toggle="modal" data-bs-target="#modalEliminarEvento" mx-2>Eliminar Evento</button><br>
+            </div>
+          </div>
+        </div>
+
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modalVerAgregarEvento" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title" id="exampleModalLabel">Agregar Evento</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+
+
+        <form>
+
+
+          <div class="mb-3">
+            <label for="inputUsuario" class="form-label">Nombre del Evento</label>
+            <input type="text" class="form-control" id="inputUsuario" name="Nombre" #Nombre="ngModel" [(ngModel)]="EventoModel.Nombre">
+          </div>
+
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Descripcion del Evento</label>
+            <input type="text" class="form-control" id="exampleInputPassword1" name="Descripcion" #Descripcion="ngModel" [(ngModel)]="EventoModel.Descripcion">
+          </div>
+
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Tipo de evento</label>
+            <input type="text" class="form-control" id="exampleInputPassword1" name="Tipo" #Tipo="ngModel" [(ngModel)]="EventoModel.Tipo">
+          </div>
+
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Inicio Fecha</label>
+            <form class="form-inline">
+              <div class="form-group">
+                <div class="input-group">
+                  <input class="form-control" placeholder="yyyy-mm-dd"
+                         name="dp" [(ngModel)]="EventoModel.FechaInit" ngbDatepicker #d="ngbDatepicker" readonly>
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="btn btn-outline-info">Elegir Fecha</button>
+                  </div>
+                </div>
+              </div>
+            </form>          </div>
+
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Final Fecha</label>
+            <form class="form-inline">
+              <div class="form-group">
+                <div class="input-group">
+
+                  <input class="form-control" placeholder="yyyy-mm-dd"
+                         name="dp" [(ngModel)]="EventoModel.FechaEnd" ngbDatepicker #c="ngbDatepicker" readonly >
+                  <div class="input-group-append">
+
+                    <button class="btn btn-outline-secondary calendar" (click)="c.toggle()" type="btn btn-outline-info">Elegir Fecha</button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Hotel</label>
+            <input type="text" class="form-control" id="exampleInputPassword1" value={{NOmbreHotel}} name="Dueño" #Dueño="ngModel" [(ngModel)]="EventoModel.NombreHotel" disabled>
+          </div>
+
+
+
+        </form>
+
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-outline-success" data-bs-dismiss="modal" (click)="agregarEvento()">Agregar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade col-12"   id="modalEditarEvento" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+  <div class="modal-dialog">
+    <div class="modal-content col-12">
+      <div class="modal-header">
+        <h1 class="modal-title" id="exampleModalLabel">Editar Evento</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <form>
+          <div class="mb-3" >
+            <label for="inputHabitacion" class="form-label">Nombre</label>
+            <input type="text" class="form-control" id="inputHabitacion"
+            name="Nombre" #Nombre="ngModel" [(ngModel)]="EventoModel.Nombre">
+          </div>
+
+          <div class="mb-3" >
+            <label for="inputRoPrecio" class="form-label">Descripcion</label>
+
+
+            <input type="text" class="form-control" id="inputRoPrecio"
+            name="Descripcion" #Descripcion="ngModel" [(ngModel)]="EventoModel.Descripcion">
+
+          </div>
+
+
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Tipo de evento</label>
+            <input type="text" class="form-control" id="exampleInputPassword1" name="Tipo" #Tipo="ngModel" [(ngModel)]="EventoModel.Tipo">
+          </div>
+
+
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Hotel</label>
+            <input type="text" class="form-control" id="exampleInputPassword1" value={{NOmbreHotel}}  disabled>
+          </div>
+
+
+        </form>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-outline-success" data-bs-dismiss="modal" (click)="editarEvento()">Save changes</button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div  class="modal fade"   id="modalEliminarEvento" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title" id="exampleModalLabel">Eliminar Evento</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        ¿Esta seguro de que desea eliminar el Usuario : {{ EventoModel.Nombre }}?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal"
+        (click)="eliminarEvento(EventoModel._id)">Si, eliminar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!--reservacion -->
+<div class="modal " style="width: 50rem;" id=""   tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title" id="exampleModalLabel"><strong>Reservaciones</strong></h1>
+
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <nav class="navbar navbar-light bg-light" id="buscar">
+
+          <div class="row g-12">
+            <div class="container">
+              <form class="form-inline" role="form">
+
+
+          </form>
+
+        </div>
+        </div>
+        </nav>
+
+
+        <table class="table"  >
+          <thead>
+            <tr>
+              <th scope="col">Usuario</th>
+              <th scope="col">Habitacion</th>
+              <th scope="col">Entrada</th>
+              <th scope="col">Salida</th>
+              <th scope="col">Precio</th>
+
+
+
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let usua of reservacion">
+              <td>{{ usua.Hotel.Nombre }}</td>
+              <td>{{ usua.Habitacion.Nombre }}</td>
+              <td>{{ usua.FechaInit }}</td>
+              <td>{{ usua.FechaEnd }}</td>
+              <td>{{ usua.Total }}</td>
+
+
+
+            </tr>
+          </tbody>
+        </table>
+
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="modal fade text-center " id="modalVerReservacion" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content" >
+      <div class="modal-header"  id= "header">
+
+        <h1 class="modal-title"id="TituloModal" ><strong>Reservaciones</strong></h1>
+
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <div class="card text-center " id="CartaDeEventos" style="width: 18rem;" *ngFor="let usua of reservacion">
+        <!--  <img src="..." class="card-img-top" alt="...">-->
+          <div class="card-body">
+
+
+
+            <h1 class="card-title"><b><b>Hotel: </b>{{ usua.Hotel.Nombre}}</b></h1>
+
+            <p class="card-text"><b>Habitacion: </b>{{ usua.Habitacion.Nombre }}</p>
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item" > <b>Inicio: </b>{{usua.FechaInit }}</li>
+            <li class="list-group-item" > <b>Final: </b>{{usua.FechaInit }}</li>
+            <li class="list-group-item" > <b>Precio Total: </b>{{usua.PrecioReservacion }}</li>
+
+          </ul>
+
+        </div>
+
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--Servicios -->
+<div class="modal fade text-center " id="modalVerServicios" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content" >
+      <div class="modal-header"  id= "header">
+
+        <h1 class="modal-title"id="TituloModal" ><strong>SERVICIOS</strong></h1>
+
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <div class="card text-center " id="CartaDeEventos" style="width: 18rem;" *ngFor="let usua of servicio">
+        <!--  <img src="..." class="card-img-top" alt="...">-->
+          <div class="card-body">
+            <h1 class="card-title"><b>{{ usua.Nombre }}</b></h1>
+            <p class="card-text">{{ usua.Descripcion }}</p>
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item" > <b>Precio: </b>{{ usua.Precio }}</li>
+
+          </ul>
+          <div class="card-body"  *ngIf="Myhotel">
+            <div class="btn-group" role="group" aria-label="Basic example">
+              <button type="button" class="btn btn-outline-warning" (click)="obtenerServicioID(usua._id)"
+              data-bs-toggle="modal" data-bs-target="#modalEditarServicio">Editar Servicio</button>
+              <button type="button" class="btn btn-outline-danger" (click)="obtenerServicioID(usua._id)"
+              data-bs-toggle="modal" data-bs-target="#modalEliminarServicio">Eliminar Servicio</button><br>
+            </div>
+          </div>
+        </div>
+
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modalVerAgregarServicios" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title" id="exampleModalLabel">Agregar Sevicio</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+
+
+        <form>
+
+
+          <div class="mb-3">
+            <label for="inputUsuario" class="form-label">Nombre del Servicio</label>
+            <input type="text" class="form-control" id="inputUsuario" name="Nombre" #Nombre="ngModel" [(ngModel)]="ServicioModel.Nombre">
+          </div>
+
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Descripcion del Servicio</label>
+            <input type="text" class="form-control" id="exampleInputPassword1" name="Descripcion" #Descripcion="ngModel" [(ngModel)]="ServicioModel.Descripcion">
+          </div>
+
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Precio</label>
+            <input type="text" class="form-control" id="exampleInputPassword1" name="Precio" #Precio="ngModel" [(ngModel)]="ServicioModel.Precio">
+          </div>
+
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Hotel</label>
+            <input type="text" class="form-control" id="exampleInputPassword1" value={{NOmbreHotel}} name="Dueño" #Dueño="ngModel" [(ngModel)]="EventoModel.NombreHotel" disabled>
+          </div>
+
+
+
+        </form>
+
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-outline-success" data-bs-dismiss="modal" (click)="agregarServicio()">Agregar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="modal fade col-12"   id="modalEditarServicio" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+  <div class="modal-dialog">
+    <div class="modal-content col-12">
+      <div class="modal-header">
+        <h1 class="modal-title" id="exampleModalLabel">Editar Servicio</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <form>
+          <div class="mb-3" >
+            <label for="inputHabitacion" class="form-label">Nombre</label>
+            <input type="text" class="form-control" id="inputHabitacion"
+            name="Nombre" #Nombre="ngModel" [(ngModel)]="ServicioModel.Nombre">
+          </div>
+
+          <div class="mb-3" >
+            <label for="inputRoPrecio" class="form-label">Descripcion</label>
+
+
+            <input type="text" class="form-control" id="inputRoPrecio"
+            name="Descripcion" #Descripcion="ngModel" [(ngModel)]="ServicioModel.Descripcion">
+
+          </div>
+
+
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Precio</label>
+            <input type="text" class="form-control" id="exampleInputPassword1" name="Tipo" #Tipo="ngModel" [(ngModel)]="ServicioModel.Precio">
+          </div>
+
+
+
+        </form>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-outline-success" data-bs-dismiss="modal" (click)="editarServicio()">Save changes</button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div  class="modal fade"   id="modalEliminarServicio" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title" id="exampleModalLabel">Eliminar Servicio</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        ¿Esta seguro de que desea eliminar el Servicio : {{ ServicioModel.Nombre }}?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal"
+        (click)="eliminarServicio(ServicioModel._id)">Si, eliminar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+<!-- Modal Editar Hotel -->
+
+<div class="modal fade col-12" *ngIf="Myhotel"  id="modalEditarUsuario" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+  <div class="modal-dialog">
+    <div class="modal-content col-12">
+      <div class="modal-header">
+        <h1 class="modal-title" id="exampleModalLabel">Editar Habitacion</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <form>
+          <div class="mb-3" >
+            <label for="inputHabitacion" class="form-label">Nombre de hotel</label>
+            <input type="text" class="form-control" id="inputHabitacion"
+            name="Nombre" #Nombre="ngModel" [(ngModel)]="MiHotelModel[0].Nombre">
+          </div>
+
+          <div class="mb-3" >
+            <label for="inputRoPrecio" class="form-label">Direccion</label>
+
+
+            <input type="text" class="form-control" id="inputRoPrecio"
+            name="Direccion" #Direccion="ngModel" [(ngModel)]="MiHotelModel[0].Direccion">
+
+          </div>
+
+
+
+
+        </form>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-outline-success" data-bs-dismiss="modal" (click)="editarHotel()">Save changes</button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Editar hotel -->
+
+
+<div  class="modal fade" *ngIf="Myhotel"   id="modalEliminarUsuario" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title" id="exampleModalLabel">Eliminar Usuario</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        ¿Esta seguro de que desea eliminar la Habitacion, {{ MiHotelModel[0].Nombre }}?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal"
+        (click)="eliminarHotel(MiHotelModel[0].Nombre)">Si, eliminar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+</div>

@@ -1,0 +1,32 @@
+<div class="container">
+
+
+  <div class="card Center" style="width: 18rem;">
+    <div class="card-body">
+      <h1 class="card-title text-center">Login</h1>
+      <div class="row justify-content-md-center">
+        <div class="col col-lg-12">
+          <form (ngSubmit)="getToken()"> </form>
+          <form>
+            <div class="mb-12">
+              <label for="Usuario" class="form-label">Usuariro</label>
+              <input type="text" class="form-control" id="Usuario" name="Usuario" #Usuario ="ngModel"
+                [(ngModel)]="usuarioModel.Usuario" aria-describedby="usuarioHelp">
+              <div id="usuarioHelp" class="form-text">No compartas tus credenciales con nadie.</div>
+            </div>
+            <div class="mb-12">
+              <br><label for="exampleInputPassword1" class="form-label">Password</label>
+              <input type="password" class="form-control" id="exampleInputPassword1" name="password" #password="ngModel"
+                [(ngModel)]="usuarioModel.password">
+            </div>
+
+            <br> <button type="submit" class="btn btn-primary text-center" (click)="login()"  routerLink="/usuarios" routerLinkActive="active">Ingresar</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+</div>

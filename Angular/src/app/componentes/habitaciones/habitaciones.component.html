@@ -1,0 +1,176 @@
+<div id= "Contenedor">
+
+  <div>
+    <img src="/assets/koala.jpg"  class="user-image">
+    </div>
+
+
+
+
+<div><br>
+<h1 *ngIf="(habitacion != null)"><strong>Habitaciones del hotel: {{ VariableHotel }}</strong> </h1>
+
+<button type="button" id="Agregar" class="btn btn-outline-primary" *ngIf="Duenno"
+data-bs-toggle="modal" data-bs-target="#modalAgregarHabitacion">Agregar Habitacion</button>
+
+</div>
+<table class="table">
+  <thead>
+    <tr>
+      <th></th>
+      <th scope="col">Nombre</th>
+      <th scope="col">Descripcion</th>
+      <th scope="col">PrecioNoche</th>
+      <th scope="col">Disponible Ahora:</th>
+      <th scope="col">Disponible antes de</th>
+
+      <th scope="col">Disponible despues de</th>
+
+      <th scope="col">Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <tr *ngFor="let usua of habitacion">
+      <td>    <img src="/assets/habitacion.jpg"  class="hotel-image">
+      </td>
+      <td>{{ usua.Nombre }}</td>
+      <td>{{ usua.Descripcion }}</td>
+      <td>{{ usua.PrecioNoche }}</td>
+      <td  *ngIf="usua.Disponible">Disponible</td>
+      <td  *ngIf="!usua.Disponible">No Disponible</td>
+
+      <td>{{ usua.FechaInit }}</td>
+
+      <td>{{ usua.FechaEnd }}</td>
+
+
+
+
+
+
+
+      <td>
+        <div class="btn-group" role="group" aria-label="Basic example">
+          <button type="button" class="btn btn-outline-warning" *ngIf="Duenno" (click)="obtenerHabitacionID2(usua._id)"
+          data-bs-toggle="modal" data-bs-target="#modalEditarUsuario">Editar</button>
+          <button type="button" class="btn btn-outline-danger" *ngIf="Duenno" (click)="obtenerHabitacionID2(usua._id)"
+          data-bs-toggle="modal" data-bs-target="#modalEliminarUsuario">Eliminar</button>
+          <button type="button" class="btn btn-outline-dark"  *ngIf="!Duenno " (click)="obtenerHabitacionID(usua._id)"
+          data-bs-toggle="modal" data-bs-target="#modalVerUsuario">Reservar</button>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<h1 *ngIf="(habitacion.length == 0)"><strong>SIN HABITACIONES</strong> </h1>
+
+
+
+<!-- Modal agregar habitacion -->
+
+<div class="modal fade" id="modalAgregarHabitacion" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title" id="exampleModalLabel">Agregar Habitacion</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+
+
+        <form>
+
+          <div class="mb-3">
+            <label for="inputUsuario" class="form-label">Nombre de Habitacion</label>
+            <input type="text" class="form-control" id="inputUsuario" name="Nombre" #Nombre="ngModel" [(ngModel)]="HabitacionModel.Nombre">
+          </div>
+
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">PrecioNoche de Habitacion</label>
+            <input type="text" class="form-control" id="exampleInputPassword1" name="PrecioNoche" #PrecioNoche="ngModel" [(ngModel)]="HabitacionModel.PrecioNoche">
+          </div>
+
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Descripcion de Habitacion</label>
+            <input type="text" class="form-control" id="exampleInputPassword1" name="Descripcion" #Descripcion="ngModel" [(ngModel)]="HabitacionModel.Descripcion">
+          </div>
+
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Nombre del Hotel</label>
+            <input type="text" class="form-control" id="exampleInputPassword1" name="NombreHotel" value = "{{ VariableHotel }}" disabled >
+          </div>
+
+        </form>
+
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-outline-success" data-bs-dismiss="modal" (click)="AgregarHabitacion()">Agregar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Editar Usuario -->
+<div class="modal fade" id="modalEditarUsuario" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title" id="exampleModalLabel">Editar Habitacion</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3" >
+            <label for="inputHabitacion" class="form-label">Nombre de habitacion</label>
+            <input type="text" class="form-control" id="inputHabitacion"
+            name="Habitacion" #Habitacion="ngModel" [(ngModel)]="HabitacionModel.Nombre">
+          </div>
+
+
+
+          <div class="mb-3" >
+            <label for="inputDescripcion" class="form-label">Descripcion</label>
+
+
+            <input type="text" class="form-control" id="inputDescripcion"
+            name="Descripcion" #Descripcion="ngModel" [(ngModel)]="HabitacionModel.Descripcion">
+
+          </div>
+
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal" (click)="editarHabitacion()">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modalEliminarUsuario" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title" id="exampleModalLabel">Eliminar Habitacion</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        ¿Esta seguro de que desea eliminar la Habitacion, {{ HabitacionModel.Nombre }}?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal"
+        (click)="eliminarHabitacion(HabitacionModel._id)">Si, eliminar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>

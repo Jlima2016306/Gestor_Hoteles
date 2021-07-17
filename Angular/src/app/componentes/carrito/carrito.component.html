@@ -1,0 +1,187 @@
+<p>carrito works!</p>
+<div class="container">
+  <h1 class="card-title text-center"><strong>AGREGAR SERVICIOS</strong></h1>
+<BR>
+  <div class="row">
+
+    <div class="col-3">
+
+      <div class="card" id="FechasReestringidas" style="width: 15rem" >
+        <div class="card-body">
+          <h1 class="card-title text-center"><strong>CARRITO DE SERVICIOS</strong></h1>
+          <div class="row justify-content-md-center">
+            <div >
+              <!-- <form (ngSubmit)="registrar()"> -->
+                <div id="FechasReestringidas">
+
+                  <div style="float:center;" >
+                    <h1  id="" text-align="center"></h1>
+
+
+                  </div>
+
+
+                <table class="table" style="float:center;">
+                  <thead>
+                    <tr>
+                      <th scope="col">Servicio</th>
+                      <th scope="col">Precio</th>
+
+
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let usua of carrito">
+                      <td>{{ usua.Nombre }}</td>
+                      <td>{{ usua.Precio }}</td>
+
+
+
+                    </tr>
+
+
+                  </tbody>
+                </table>
+                </div>
+
+            </div>
+          </div>
+          <h2>Total de Servicios:{{TotalServicios}} </h2>
+
+        </div>
+      </div>
+
+
+
+
+
+    </div>
+
+    <div class="col-9">
+      <h1 class="card-title text-center"><strong>SERVICIOS</strong></h1>
+
+
+      <div class="row row-cols-2 row-cols-md-3 g-3">
+        <div class="col" *ngFor="let usua of servicio">
+
+
+                  <div class="card text-center " id="CartaDeEventos" style="width: 12rem;">
+                  <div class="card-body">
+                    <h1 class="card-title"><b>{{ usua.Nombre }}</b></h1>
+                    <p class="card-text">{{ usua.Descripcion }}</p>
+                  </div>
+                  <ul class="list-group list-group-flush">
+                    <li class="list-group-item" > <b>Precio: </b>{{ usua.Precio }}</li>
+
+                  </ul>
+                  <div class="card-body"  >
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                      <button type="button" class="btn btn-outline-danger" (click)="AgregarServicio(usua.Nombre)"
+                      data-bs-toggle="modal" data-bs-target="#modalEliminarServicio">Agregar al Carrito</button><br>
+                    </div>
+                  </div>
+                </div>
+
+
+
+
+        </div>
+      </div>
+
+
+
+
+
+
+    </div>
+
+
+  </div>
+
+  <div class="row-2">
+<br>
+    <div class="col-12">
+
+    <div>
+
+      <h1 class="card-title text-center"><strong>RESERVACION</strong></h1>
+
+      <table class="table" >
+        <thead>
+          <tr>
+            <th scope="col">Hotel</th>
+
+            <th scope="col">Habitacion</th>
+            <th scope="col">Fecha inicio</th>
+            <th scope="col">Facha Final</th>
+            <th scope="col">Días</th>
+            <th scope="col">Total</th>
+
+            <th scope="col">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr >
+            <td>{{ ReservacionModel.Hotel.Nombre }}</td>
+            <td>{{ ReservacionModel.Habitacion.Nombre }}</td>
+            <td>{{ ReservacionModel.FechaInit }}</td>
+            <td>{{ ReservacionModel.FechaEnd }}</td>
+            <td>{{ ReservacionModel.Dias }}</td>
+
+            <td>{{ ReservacionModel.PrecioReservacion }}</td>
+
+
+
+            <td>
+              <div class="btn-group" role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-outline-warning" (click)="obtenerNada()"
+                data-bs-toggle="modal" data-bs-target="#modalEliminarReservacion">Cancelar</button>
+
+                <button type="button" class="btn btn-outline-dark"
+                data-bs-toggle="modal" routerLink="/historial"routerLinkActive="active"  data-bs-target="#modalVerUsuario"  (click)="Facturar()">Facturar</button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+
+
+    </div>
+
+
+    <div class="col">
+
+    </div>
+
+
+
+  </div>
+
+
+</div>
+
+
+
+-->
+
+
+<div class="modal fade" id="modalEliminarReservacion" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Cancelar Reservacion</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        ¿Esta seguro de que desea cancelar la reservacion de la habitacion: {{ ReservacionModel.Habitacion.Nombre }}?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+        <button type="button" class="btn btn-outline-success" data-bs-dismiss="modal"
+        (click)="EliminarReservacion(ReservacionModel._id)">Si, eliminar</button>
+      </div>
+    </div>
+  </div>
+</div>

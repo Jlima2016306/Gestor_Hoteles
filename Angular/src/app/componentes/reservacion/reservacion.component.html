@@ -1,0 +1,171 @@
+<div>
+
+  <img src="/assets/koala.jpg" *ngIf="SinFacturar"  class="user-image">
+
+</div>
+<h1 class="card-title text-center"><strong>  RESERVACION OPCIONES</strong></h1>
+
+
+<div class="card w-71" style="width: 30rem;"  *ngIf="!SinFacturar">
+  <div class="card-body">
+    <h1 class="card-title text-center">RESERVACION EN PROCESO DE HABITACION: <strong>{{NombreHabitacion}}</strong> </h1>
+    <div class="row justify-content-md-center">
+      <div class="col col-lg-12">
+        <!-- <form (ngSubmit)="registrar()"> -->
+          <form>
+
+            <div class="mb-3"><br><br>
+              <h2 for="exampleInputPassword1" class="form-label">Inicio Fecha</h2>
+              <form class="form-inline">
+                <div class="form-group">
+                  <div class="input-group">
+                    <input class="form-control" placeholder="yyyy-mm-dd"
+                           name="dp" [(ngModel)]="ReservacionModel.FechaInit" size="10" ngbDatepicker #d="ngbDatepicker" readonly>
+                    <div class="input-group-append">
+                      <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="btn btn-outline-info">Elegir Fecha</button>
+                    </div>
+                  </div>
+                </div>
+              </form>          </div>
+
+
+            <div class="mb-3">
+              <h2 for="exampleInputPassword1" class="form-label">Final Fecha</h2>
+              <form class="form-inline">
+                <div class="form-group">
+                  <div class="input-group">
+
+                    <input class="form-control" placeholder="yyyy-mm-dd"
+                           name="dp" [(ngModel)]="ReservacionModel.FechaEnd" ngbDatepicker #c="ngbDatepicker" readonly >
+                    <div class="input-group-append">
+
+                      <button class="btn btn-outline-secondary calendar" (click)="c.toggle()" type="btn btn-outline-info">Elegir Fecha</button>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+
+
+
+         <br> <button type="submit"  *ngIf="!SinFacturar" class="btn btn-primary" (click)="AgregarReservacion()">Crear Rservacion</button>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>
+<br>
+
+<h1 *ngIf="SinFacturar" text-align="center"><strong> Reservacion sin Facturar</strong></h1>
+
+
+
+<table class="table"  *ngIf="SinFacturar">
+  <thead>
+    <tr>
+      <th scope="col">Hotel</th>
+
+      <th scope="col">Habitacion</th>
+      <th scope="col">Fecha inicio</th>
+      <th scope="col">Facha Final</th>
+      <th scope="col">Días</th>
+      <th scope="col">Total</th>
+
+      <th scope="col">Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr >
+      <td>{{ ReservacionModel.Hotel.Nombre }}</td>
+      <td>{{ ReservacionModel.Habitacion.Nombre }}</td>
+      <td>{{ ReservacionModel.FechaInit }}</td>
+      <td>{{ ReservacionModel.FechaEnd }}</td>
+      <td>{{ ReservacionModel.Dias }}</td>
+
+      <td>{{ ReservacionModel.PrecioReservacion }}</td>
+
+
+
+      <td>
+        <div class="btn-group" role="group" aria-label="Basic example">
+          <button type="button" class="btn btn-outline-warning" (click)="obtenerNada(ReservacionModel._id)"
+          data-bs-toggle="modal" data-bs-target="#modalEliminarReservacion">Cancelar</button>
+          <button type="button" class="btn btn-outline-danger" (click)="obtenerNada(ReservacionModel._id)"
+          data-bs-toggle="modal" data-bs-target="#">Agregar Servicios</button>
+          <button type="button" class="btn btn-outline-dark"
+          data-bs-toggle="modal" data-bs-target="#modalVerUsuario" (click)="Facturar()">Facturar sin Servicios</button>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+
+
+
+
+<div class="card w-74" style="width: 30rem" *ngIf="!SinFacturar">
+  <div class="card-body">
+    <h1 class="card-title text-center"><strong>  Fechas restringidas</strong></h1>
+    <div class="row justify-content-md-center">
+      <div class="col col-lg-12">
+        <!-- <form (ngSubmit)="registrar()"> -->
+          <div id="FechasReestringidas">
+
+            <div style="float:center;" >
+              <h1 *ngIf="!SinFacturar" id="" text-align="center"></h1>
+
+
+            </div>
+
+
+          <table class="table" style="float:center;" *ngIf="!SinFacturar">
+            <thead>
+              <tr>
+                <th scope="col"> Inicio</th>
+                <th scope="col">Final</th>
+
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let usua of fechasRestringidas">
+                <td>{{ usua.FechaInicio }}</td>
+                <td>{{ usua.FechaFinal }}</td>
+
+
+              </tr>
+            </tbody>
+          </table>
+          </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+<div class="modal fade" id="modalEliminarReservacion" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Cancelar Reservacion</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        ¿Esta seguro de que desea cancelar la reservacion de la habitacion: {{ ReservacionModel.Habitacion.Nombre }}?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+        <button type="button" class="btn btn-outline-success" data-bs-dismiss="modal"
+        (click)="EliminarReservacion(ReservacionModel._id)">Si, eliminar</button>
+      </div>
+    </div>
+  </div>
+</div>

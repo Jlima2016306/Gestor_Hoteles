@@ -1,0 +1,88 @@
+<div class="container">
+  <div class="row">
+    <div class="col-7">
+      <br><br>
+      <div class="col-12">
+        <h1 class="card-title text-center"><strong>Historial Hoteles Visitados</strong></h1>
+
+
+        <div class="row row-cols-1 row-cols-md-3 g-3">
+          <div class="col" *ngFor="let usua of HistorialHoteles">
+
+                    <div class="card text-center " id="CartaDeEventos" style="width: 12rem;">
+                    <div class="card-body">
+                      <h1 class="card-title"><b>{{ usua.Hotel.Nombre }}</b></h1>
+                      <p class="card-text"></p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                      <li class="list-group-item" > <b>Fecha Reservacion hecha: </b>{{ usua.fechaReservacion }}</li>
+
+                    </ul>
+                    <div class="card-body"  >
+                      <div class="btn-group" role="group" aria-label="Basic example">
+
+                      </div>
+                    </div>
+                  </div>
+
+
+
+
+          </div>
+        </div>
+
+
+
+
+
+
+      </div>
+
+
+
+    </div>
+    <div class="col-5">
+      <div class="col-12">
+        <br><br>
+        <h1 class="card-title text-center"><strong>Historial de Servicios </strong></h1>
+
+
+        <div class="row row-cols-1 row-cols-md-2 g-2">
+          <div class="col" *ngFor="let usua of HistorialServicio">
+
+                    <div class="card  border-success   " id="CartaDeEventos" style="width: 12rem;">
+                    <div class="card-body">
+                      <h1 class="card-title"><b>{{ usua.Nombre }}</b></h1>
+                      <p class="card-text">{{ usua.Descripcion }}</p>
+
+                      <p class="card-text"></p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                      <li class="list-group-item" > <b>Precio: </b>{{ usua.Precio }}</li>
+
+                    </ul>
+                    <div class="card-body"  >
+                      <div class="btn-group" role="group" aria-label="Basic example">
+
+                      </div>
+                    </div>
+                  </div>
+
+
+
+
+          </div>
+        </div>
+
+
+
+
+
+
+      </div>
+
+
+    </div>
+
+  </div>
+</div>

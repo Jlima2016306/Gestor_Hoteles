@@ -1,0 +1,64 @@
+
+<div class="container" *ngIf="ADMIN">
+
+  <div class="row">
+
+    <div class="col-12">
+      <h1><strong>GRAFICAS DE HOTELES</strong> </h1>
+
+    </div>
+
+
+</div>
+
+  <div class="row">
+
+    <div class="col-5">
+
+<div>
+  <div>
+    <div>
+      <div style="display: block">
+        <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
+          [legend]="barChartLegend" [chartType]="barChartType" (chartHover)="chartHovered($event)"
+          (chartClick)="chartClicked($event)"></canvas>
+      </div>
+      <button class="btn btn-primary" mat-button mat-raised-button color="primary" (click)="randomize()">Cambiar tipo de grafica</button>
+    </div>
+  </div>
+</div>
+
+    </div>
+    <div class="col-7">
+
+      <div>
+        <div>
+          <div class="chart">
+            <canvas baseChart
+              [data]="pieChartData"
+              [labels]="pieChartLabels"
+              [chartType]="pieChartType"
+              [plugins]="pieChartPlugins"
+
+              [colors]="pieChartColors"
+              [legend]="pieChartLegend" >
+
+
+            </canvas>
+            <h3><strong>Porcentaje de Eleccion de Hoteles</strong>  </h3>
+
+          </div>
+        </div>
+      </div>
+      <div>
+
+
+
+    </div>
+  </div>
+
+</div>
+</div>
+
+
+<h1 *ngIf="!ADMIN"><strong>USTED NO DEBERIA ESTAR AQUÍ</strong> </h1>

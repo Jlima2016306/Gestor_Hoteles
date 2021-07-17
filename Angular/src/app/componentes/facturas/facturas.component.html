@@ -1,0 +1,67 @@
+
+<div class="container">
+  <div class="row">
+
+    <div class="col-12" >
+      <h1><strong>Historial de FACTURAS</strong></h1>
+    </div>
+
+
+
+</div>
+
+<div class="row">
+
+  <div class="col-12">
+
+    <div class="row row-cols-2 row-cols-md-3 g-3">
+      <div class="col" *ngFor="let usua of facturas">
+
+                <div class="card text-center " id="CartaDeEventos" style="width: 20rem;">
+                <div class="card-body">
+                  <h1 class="card-title"><b>Hotel : {{ usua.Hotel.Nombre}}</b></h1>
+                </div>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item" > <b>Usuario : </b>{{ usua.Usuario.Usuario }}</li>
+                  <li class="list-group-item" > <b>Fechs Entrada : </b>{{ usua.idReservacion.FechaInit }}</li>
+                  <li class="list-group-item" > <b>Fecha Salida : </b>{{ usua.idReservacion.FechaEnd }}</li>
+
+                  <li class="list-group-item" > <b>Días : </b>{{ usua.idReservacion.Dias }}</li>
+
+                  <li class="list-group-item" > <b>Precio  total de Servicios  </b>{{ usua.PrecioServicios }}</li>
+                  <li class="list-group-item" > <b>Precio total de Reservacion </b>{{ usua.PrecioReservacion }}</li>
+                  <li class="list-group-item" > <b>Total: </b>{{ usua.Total }}</li>
+
+                </ul>
+
+
+
+                <div class="card-body"  >
+                  <div class="btn-group" role="group" aria-label="Basic example">
+
+                    <a class="btn btn-danger"(click)="ObtenerPDF(usua._id)"  *ngIf=" (usua.PrecioServicios != 0)"  id="descargar" href="/assets/Factura.pdf" download="Factura.pdf" >Decargar Pdf</a>
+
+
+                  </div>
+                  <div class="btn-group" role="group" aria-label="Basic example">
+
+                  </div>
+                </div>
+              </div>
+
+
+
+
+      </div>
+    </div>
+
+
+
+
+  </div>
+
+
+</div>
+
+
+</div>
